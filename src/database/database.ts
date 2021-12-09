@@ -11,7 +11,7 @@ const {
   DB_NAME,
 } = process.env;
 
-const databaseConfig = (NODE_ENV === 'production')
+const databaseConfig: any = (NODE_ENV === 'production')
   ? {
     connectionString: process.env.DATABASE_URL,
     ssl: {

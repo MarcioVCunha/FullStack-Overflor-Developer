@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import postUserService from '../service/postUser';
-import User from '../interfaces/userInterfaces';
 
 async function postUser(req: Request, res: Response) {
   const user = req.body;

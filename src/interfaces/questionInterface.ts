@@ -6,4 +6,14 @@ interface Question {
   submitedAt?: string;
 }
 
-export default Question;
+interface Answer {
+  answeredAt?: string;
+  answeredBy?: string;
+  answer: string;
+  questionId?: string;
+}
+
+export {
+  Question,
+  Answer,
+};

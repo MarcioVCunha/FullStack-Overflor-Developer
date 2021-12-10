@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import Question from '../interfaces/questionInterface';
+import { Question } from '../interfaces/questionInterface';
 import postQuestionService from '../service/postQuestion';
-import getDate from '../utils/getDate';
+import getDate from '../utility_functions/getDate';
 
 async function postQuestion(req: Request, res: Response) {
   const questionInfo: Question = req.body;

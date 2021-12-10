@@ -1,4 +1,4 @@
-import Question from '../interfaces/questionInterface';
+import { Question } from '../interfaces/questionInterface';
 import { postQuestionRepository } from '../repository/questionRepository';
 
 async function postQuestionService(questionInfo: Question): Promise<string> {

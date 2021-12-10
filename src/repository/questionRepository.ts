@@ -1,6 +1,5 @@
-/* eslint-disable import/prefer-default-export */
 import connection from '../database/database';
-import Question from '../interfaces/questionInterface';
+import { Question, Answer } from '../interfaces/questionInterface';
 
 async function postQuestionRepository(questionInfo: Question): Promise<string> {
   try {
@@ -46,6 +45,32 @@ async function postQuestionRepository(questionInfo: Question): Promise<string> {
   }
 }
 
+async function postAnswerRepositoy(answer: Answer): Promise<string> {
+  try {
+    const idAnswerer = await connection.query(`
+      SELECT
+        id
+      FROM
+        students
+      WHERE
+        token = $1;
+    `, [answer.answeredBy]);
+
+    await connection.query(`
+      UPDATE
+        questions
+      SET
+        ("answeredAt", "answeredBy", answer, answered) = ($1, $2, $3, true)
+      WHERE
+        id = $4;
+    `, [answer.answeredAt, idAnswerer.rows[0].id, answer.answer, answer.questionId]);
+    return ('ok');
+  } catch (error) {
+    return (error);
+  }
+}
+
 export {
   postQuestionRepository,
+  postAnswerRepositoy,
 };

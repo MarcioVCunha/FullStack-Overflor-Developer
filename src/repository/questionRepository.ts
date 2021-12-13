@@ -1,5 +1,7 @@
 import connection from '../database/database';
-import { Question, Answer, QuestionAndAnswer } from '../interfaces/questionInterface';
+import {
+  Question, Answer, QuestionAndAnswer, QuestionArray,
+} from '../interfaces/questionInterface';
 
 async function postQuestionRepository(questionInfo: Question): Promise<string> {
   try {
@@ -121,8 +123,61 @@ async function getQuestionByIdRepository(questionId: string): Promise<QuestionAn
   }
 }
 
+async function getAllQuestions(): Promise<QuestionArray> {
+  try {
+    const questions = await connection.query(`
+     SELECT
+       id, question, student, class, "submitAt"
+     FROM
+       questions
+     WHERE 
+       answered = false;
+   `);
+
+    return (questions.rows);
+  } catch (error) {
+    return (error);
+  }
+}
+
+async function getStudentNameById(id: string): Promise<string> {
+  try {
+    const name = await connection.query(`
+      SELECT
+        name
+      FROM
+        students
+      WHERE
+        id = $1;
+    `, [id]);
+
+    return (name.rows[0].name);
+  } catch (error) {
+    return (error);
+  }
+}
+
+async function getClassById(id: string): Promise<string> {
+  try {
+    const name = await connection.query(`
+      SELECT 
+        "className" 
+      FROM 
+        classes 
+      WHERE id = $1;
+    `, [id]);
+
+    return (name.rows[0].className);
+  } catch (error) {
+    return (error);
+  }
+}
+
 export {
   postQuestionRepository,
   postAnswerRepositoy,
   getQuestionByIdRepository,
+  getAllQuestions,
+  getStudentNameById,
+  getClassById,
 };

@@ -1,10 +1,13 @@
 interface Question {
+  id?: number;
   question: string;
   student: string;
   class: string;
   tags: string;
   submitedAt?: string;
 }
+
+type QuestionArray = Question[];
 
 interface Answer {
   answeredAt?: string;
@@ -30,4 +33,5 @@ export {
   Question,
   Answer,
   QuestionAndAnswer,
+  QuestionArray,
 };
